@@ -32,26 +32,28 @@ export default function PricingCard({
   return (
     <div
       onClick={onSelect}
-      className={`relative cursor-pointer transition-all duration-300 rounded-[28px] overflow-visible border-2 flex bg-[#2D3233] w-full ${
+      className={`relative cursor-pointer transition-all duration-300 rounded-[28px] overflow-visible border-2 flex bg-[#2D3233] w-full p-[1px] ${
         selected
           ? "border-[#FDB056] z-10 shadow-lg shadow-[#FDB056]/10"
-          : "border-white/10 hover:border-white/20"
+          : isMain
+            ? "border-[#fd972e]"
+            : "border-white/10 hover:border-white/20"
       } ${
         isMain
-          ? "md:flex-row items-center justify-between min-h-[110px] md:min-h-[130px] p-5 md:px-10"
-          : `md:flex-col items-center justify-between p-4 ${
+          ? "md:flex-row items-center justify-between min-h-[110px] md:min-h-[130px]"
+          : `md:flex-col items-center justify-between ${
               isForever ? "md:min-h-[150px]" : "md:min-h-[220px]"
             }`
       }`}
     >
       {/* Discount Badge */}
       <div
-        className={`absolute left-auto md:left-[30px] md:right-auto bg-[#FD5656] text-white rounded-b-lg z-20 px-2 py-1 flex items-center justify-center w-[41px] min-w-[40px] transition-all duration-500 
+        className={`absolute bg-[#FD5656] text-white rounded-b-lg z-20 px-2 py-1 flex items-center justify-center w-[41px] min-w-[40px] transition-all duration-500 
     ${isExpired ? "opacity-0 -translate-y-full" : "opacity-100"}
     ${
       isMain
-        ? "top-0 right-14" // «Навсегда»- remain in the same position, while others move up
-        : "-top-[1.6px] right-8" // other plans - move up to the same position as the main plan's badge
+        ? "top-0 right-14 md:right-auto md:left-[25px]"
+        : "-top-[1.6px] right-8 md:right-auto md:left-[25px]"
     }`}
       >
         <span className="text-[12px] md:text-sm font-bold leading-none whitespace-nowrap">
@@ -66,7 +68,7 @@ export default function PricingCard({
       )}
 
       {/* --- MOBILE VIEW --- */}
-      <div className="flex md:hidden w-full items-center justify-between mt-4 px-1">
+      <div className="flex md:hidden w-full items-center justify-between mt-4 px-5 pb-5">
         <div className="flex flex-col items-start leading-none min-w-[120px]">
           <p className="font-medium text-[14px] text-white/90 mb-3 first-letter:uppercase lowercase">
             {plan.period}
@@ -115,10 +117,11 @@ export default function PricingCard({
       </div>
 
       {/* --- DESKTOP VIEW --- */}
-      <div className="hidden md:flex w-full items-center justify-between h-full">
+      <div className="hidden md:flex w-full items-center justify-between h-full relative px-6 py-4 overflow-visible">
         {isMain ? (
           <>
-            <div className="flex flex-col flex-1 items-center justify-center">
+            {/* Գնի հատվածը (Ձախ կողմում) */}
+            <div className="flex flex-col flex-1 items-center justify-center pr-4">
               <p className="font-medium text-lg text-white mb-1 first-letter:uppercase lowercase">
                 {plan.period}
               </p>
@@ -142,15 +145,23 @@ export default function PricingCard({
                 )}
               </div>
             </div>
-            <div className="flex flex-col w-[45%] justify-center px-4 border-white/5">
-              <p className="text-[13px] text-gray-400 leading-tight">
-                {plan.text}
-              </p>
+
+            {/* For the main plan, we show a more detailed description on the right side */}
+
+            <div className="flex flex-col items-start text-left min-w-[220px] max-w-[260px] ml-auto">
+              <div className="flex flex-col items-start leading-tight text-gray-400 text-[13px] md:-mt-2">
+                <span className="whitespace-nowrap">
+                  Для тех, кто хочет всегда быть в форме
+                </span>
+                <span className="whitespace-nowrap">
+                  и поддерживать здоровье
+                </span>
+              </div>
             </div>
           </>
         ) : (
           <div className="flex flex-col items-center w-full h-full justify-between">
-            <div className="mt-9 text-center font-medium text-[15px] text-gray-100 first-letter:uppercase lowercase">
+            <div className="mt-4 text-center font-medium text-[15px] text-gray-100 first-letter:uppercase lowercase">
               {plan.period}
             </div>
 
@@ -170,8 +181,7 @@ export default function PricingCard({
             </div>
 
             {!isForever && (
-              <div className="h-[35px] pb-1 w-full flex justify-start pl-1">
-               
+              <div className="h-[35px] pb-1 w-full flex justify-start">
                 <div className="max-w-[130px]">
                   <p className="text-[10px] text-gray-500 text-left leading-tight font-medium">
                     {plan.id === 1 ||
@@ -180,7 +190,7 @@ export default function PricingCard({
                     ) : plan.id === 2 ||
                       plan.period.toLowerCase().includes("1 месяц") ? (
                       <>
-                        Чтобы получить <br /> первые результаты
+                        Чтобы получить первые <br /> результаты
                       </>
                     ) : plan.id === 3 ||
                       plan.period.toLowerCase().includes("3 месяца") ? (
@@ -200,5 +210,3 @@ export default function PricingCard({
     </div>
   );
 }
-
-

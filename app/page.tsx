@@ -81,8 +81,8 @@ export default function HomePage() {
 
       <div className="max-w-4xl mx-auto px-4 py-8 md:py-12">
         <h1
-          className="text-2xl md:text-3xl font-black mb-6 md:mb-10 tracking-tight leading-tight uppercase 
-                 text-left md:ml-10"
+          className="text-2xl md:text-3xl font-black mb-6 md:mb-10 tracking-tight leading-tight 
+                 text-left md:ml-5"
         >
           Выбери подходящий <br className="block md:hidden" />
           для себя <span className="text-[#FDB056]">тариф</span>
@@ -94,19 +94,23 @@ export default function HomePage() {
           <div className="flex flex-col md:flex-row gap-6 md:gap-10 items-center md:items-start relative z-10">
             {/* Athlete Image */}
             <div className="w-full md:w-2/5 flex justify-center">
-              <Image
-                src="/Group 238462.png"
-                alt="Athlete"
-                width={320}
-                height={450}
-                unoptimized
-                className="object-contain h-auto 
-                /* Mobile: 200px width | Desktop (md): 320px width */
-                   w-[200px] md:w-[320px] 
-                   /* Mobile: Fixed max-width to keep it small | Desktop (md): Remove constraint */
-                   max-w-[200px] md:max-w-none"
-                priority
-              />
+              <div className="w-full md:w-2/5 flex justify-center">
+                <Image
+                  src="/Group 238462.png"
+                  alt="Athlete"
+                  width={320}
+                  height={450}
+                  quality={100}
+                  className="object-contain shrink-0 
+               
+               /* To maintain the previous desktop look */
+               md:w-[320px] md:h-auto md:mt-4 md:max-w-none
+               
+                /* Mobile dimensions (only for smaller screens) */
+               w-[124px] h-[250px] max-w-[124px]"
+                  priority
+                />
+              </div>
             </div>
 
             {/* Content Area (Plans + Button + Legal) */}
@@ -156,9 +160,8 @@ export default function HomePage() {
                 <p className="text-[11px] text-gray-300 leading-snug">
                   Следуя плану на 3 месяца и более, люди получают
                   {/* on desktop */}
-                  <br className="hidden md:block" />{" "} в 2 раза лучший результат,
+                  <br className="hidden md:block" /> в 2 раза лучший результат,
                   {/* on mobile */}
-                 
                   чем за 1 месяц
                 </p>
               </div>
@@ -199,8 +202,7 @@ export default function HomePage() {
                   {/* " " for desktop */}
                   <br className="block md:hidden" />и{" "}
                   <span className="underline decoration-gray-600">
-                    Политикой {" "}
-                    <br className="hidden md:block" />
+                    Политикой <br className="hidden md:block" />
                     конфиденциальности
                   </span>
                 </span>
