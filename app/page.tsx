@@ -15,7 +15,7 @@ interface PricingPlan {
 
 export default function HomePage() {
   const [plans, setPlans] = useState<PricingPlan[]>([]);
-  const [timeLeft, setTimeLeft] = useState(120);
+  const [timeLeft, setTimeLeft] = useState(12);
   const [selectedPeriod, setSelectedPeriod] = useState<string | null>(null);
   const [agreed, setAgreed] = useState(false);
   const [showCheckboxError, setShowCheckboxError] = useState(false);
@@ -88,7 +88,7 @@ export default function HomePage() {
           для себя <span className="text-[#FDB056]">тариф</span>
         </h1>
 
-        <div className="relative overflow-hidden">
+        <div className="relative">
           {/* Flex container: Mobile-ում իրար տակ (col), Desktop-ում կողք-կողքի (row) */}
           {/* Flex container: Column on mobile (col), Row on desktop (row) */}
           <div className="flex flex-col md:flex-row gap-6 md:gap-10 items-center md:items-start relative z-10">
@@ -134,21 +134,22 @@ export default function HomePage() {
 
               {/* Other Plans Grid */}
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-2">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-2 min-w-0">
                 {plans
                   .filter((p) => !p.is_best)
                   .reverse()
                   .map((plan) => (
-                    <PricingCard
-                      key={plan.id}
-                      plan={plan}
-                      isExpired={isExpired}
-                      selected={selectedPeriod === plan.period}
-                      onSelect={() => {
-                        setSelectedPeriod(plan.period);
-                        setShowCheckboxError(false);
-                      }}
-                    />
+                    <div key={plan.id} className="min-w-0">
+                      <PricingCard
+                        plan={plan}
+                        isExpired={isExpired}
+                        selected={selectedPeriod === plan.period}
+                        onSelect={() => {
+                          setSelectedPeriod(plan.period);
+                          setShowCheckboxError(false);
+                        }}
+                      />
+                    </div>
                   ))}
               </div>
 
@@ -157,7 +158,7 @@ export default function HomePage() {
                 <span className="text-[#fd972e] font-bold text-lg leading-none">
                   !
                 </span>
-                <p className="text-[11px] text-gray-300 leading-snug">
+                <p className="text-[11px] text-gray-200 leading-snug">
                   Следуя плану на 3 месяца и более, люди получают
                   {/* on desktop */}
                   <br className="hidden md:block" /> в 2 раза лучший результат,

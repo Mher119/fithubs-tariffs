@@ -35,7 +35,7 @@ export default function PricingCard({
       className={`relative cursor-pointer transition-all duration-300 rounded-[28px] overflow-visible border-2 flex bg-[#2D3233] w-full p-[1px] ${
         selected
           ? "border-[#FDB056] z-10 shadow-lg shadow-[#FDB056]/10"
-          : isMain
+          : isMain && !isForever
             ? "border-[#fd972e]"
             : "border-white/10 hover:border-white/20"
       } ${
@@ -62,7 +62,7 @@ export default function PricingCard({
       </div>
 
       {isMain && (
-        <div className="absolute top-1 right-6 text-[#fd972e] text-[10px] font-medium uppercase tracking-widest opacity-80">
+        <div className="absolute top-1 right-4 text-[#fd972e] text-[10px] font-medium uppercase tracking-widest opacity-80">
           хит!
         </div>
       )}
@@ -117,24 +117,29 @@ export default function PricingCard({
       </div>
 
       {/* --- DESKTOP VIEW --- */}
-      <div className="hidden md:flex w-full items-center justify-between h-full relative px-6 py-4 overflow-visible">
+      <div className="hidden md:flex w-full items-center justify-between h-full relative px-6 py-4 overflow-visible box-border">
         {isMain ? (
           <>
             {/* Գնի հատվածը (Ձախ կողմում) */}
-            <div className="flex flex-col flex-1 items-center justify-center pr-4">
-              <p className="font-medium text-lg text-white mb-1 first-letter:uppercase lowercase">
+            {/* Price Section (Left Side) */}
+            <div className="flex flex-col w-[55%] items-start justify-center pl-10 h-full">
+              <p className="font-medium text-lg text-white mb-1 first-letter:uppercase lowercase pl-6">
                 {plan.period}
               </p>
               <div className="flex flex-col items-center">
-                <div className="flex items-center">
+                <div className="flex items-start pt-1">
+                  {/* items-start-ը երկուսին էլ կպահի վերևի գծի վրա */}
+                  {/* For the main plan, we want the price to be more prominent, so we use a larger font size and a bolder weight. The color also changes based on whether the plan is expired or not. */}
                   <span
-                    className={`font-[900] text-5xl ${isExpired ? "text-white" : "text-[#fd972e]"}`}
+                    className={`font-[700] text-5xl leading-none ${isExpired ? "text-white" : "text-[#fd972e]"}`}
                   >
                     {currentPrice}
                   </span>
                   <span
-                    className={`ml-3 font-[900] text-4xl ${isExpired ? "text-white" : "text-[#fd972e]"}`}
+                    className={`ml-2 font-[700] text-5xl leading-none pt-[1px] ${isExpired ? "text-white" : "text-[#fd972e]"}`}
                   >
+                    {/* pt-[2px]-ով կամ pt-[4px]-ով կարող ես միլիմետրերով կարգավորել, որ լրիվ հավասարվեն վերևից */}
+                    {/* You can adjust it in millimeters using pt-[2px] or pt-[4px] so that they align perfectly from the top */}
                     ₽
                   </span>
                 </div>
@@ -148,8 +153,9 @@ export default function PricingCard({
 
             {/* For the main plan, we show a more detailed description on the right side */}
 
-            <div className="flex flex-col items-start text-left min-w-[220px] max-w-[260px] ml-auto">
-              <div className="flex flex-col items-start leading-tight text-gray-400 text-[13px] md:-mt-2">
+            <div className="flex flex-col w-[40%] items-end justify-center h-full pr-6 pl-10">
+              <div className="flex flex-col items-start text-right leading-tight text-white/50 text-[11px]">
+                {/* text-[11px] - մի փոքր փոքրացրինք, որ հաստատ տեղավորվի */}
                 <span className="whitespace-nowrap">
                   Для тех, кто хочет всегда быть в форме
                 </span>
@@ -160,30 +166,30 @@ export default function PricingCard({
             </div>
           </>
         ) : (
-          <div className="flex flex-col items-center w-full h-full justify-between">
-            <div className="mt-4 text-center font-medium text-[15px] text-gray-100 first-letter:uppercase lowercase">
+          <div className="flex flex-col items-start w-full h-full justify-between">
+            <div className="mt-9 text-center w-full font-medium text-[15px] text-gray-100 first-letter:uppercase lowercase">
               {plan.period}
             </div>
 
-            <div className="flex flex-col items-center justify-center flex-grow py-2">
+            <div className="flex flex-col items-center justify-center flex-grow py-2 w-full mt-2">
               <div className="flex items-center text-white">
-                <span className="font-[900] text-2xl">{currentPrice}</span>
-                <span className="ml-2 font-[900] text-2xl">₽</span>
+                <span className="font-[700] text-2xl">{currentPrice}</span>
+                <span className="ml-2 font-[700] text-2xl">₽</span>
               </div>
               {!isExpired && (
-                <div className="relative self-end text-gray-400 text-[11px] flex items-center">
+                <div className="relative self-end text-white/40 text-[14px] flex items-center mr-5">
                   <span className="relative">
                     {oldPrice} ₽
-                    <span className="absolute left-0 top-1/2 w-full h-[1px] bg-gray-500 -translate-y-1/2"></span>
+                    <span className="absolute left-0 top-1/2 w-full h-[1px] bg-white/40 -translate-y-1/2"></span>
                   </span>
                 </div>
               )}
             </div>
 
             {!isForever && (
-              <div className="h-[35px] pb-1 w-full flex justify-start">
-                <div className="max-w-[130px]">
-                  <p className="text-[10px] text-gray-500 text-left leading-tight font-medium">
+              <div className="h-[35px] pb-1 w-full flex justify-start -ml-4 mt-7 overflow-visible">
+                <div className=" w-full">
+                  <p className="text-[10px] text-white/50 text-start leading-tight font-small whitespace-nowrap">
                     {plan.id === 1 ||
                     plan.period.toLowerCase().includes("1 неделя") ? (
                       "Чтобы просто начать"
