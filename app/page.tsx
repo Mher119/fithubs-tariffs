@@ -15,7 +15,7 @@ interface PricingPlan {
 
 export default function HomePage() {
   const [plans, setPlans] = useState<PricingPlan[]>([]);
-  const [timeLeft, setTimeLeft] = useState(120);
+  const [timeLeft, setTimeLeft] = useState(10);
   const [selectedPeriod, setSelectedPeriod] = useState<string | null>(null);
   const [agreed, setAgreed] = useState(false);
   const [showCheckboxError, setShowCheckboxError] = useState(false);
@@ -56,23 +56,23 @@ export default function HomePage() {
   return (
     <main className="min-h-screen bg-[#12171d] text-white pb-20 font-sans">
       {/* Timer Header */}
-      <header className="sticky top-0 z-50 p-3 text-center bg-[#1D5B43]">
-        <p className="text-[14px] font-bold tracking-tight text-white uppercase md:text-[15px]">
+      <header className="sticky top-0 z-50 p-3 text-center bg-[#1D5B43] min-h-[92px] md:min-h-[102px] flex flex-col justify-center ">
+        <p className="text-[14px] font-medium tracking-tight text-white md:text-[31px]">
           Успейте открыть пробную неделю
         </p>
         <div className="flex items-center justify-center gap-2 mt-1">
           <span
-            className={`text-[#FFBB00] text-sm ${timeLeft <= 30 && timeLeft > 0 ? "animate-blink-red" : ""}`}
+            className={`text-[#FFBB00] text-md ${timeLeft <= 30 && timeLeft > 0 ? "animate-blink-red" : ""}`}
           >
             ✦
           </span>
           <div
-            className={`text-2xl font-black tracking-wider ${timeLeft <= 30 && timeLeft > 0 ? "animate-blink-red" : "text-[#FFBB00]"}`}
+            className={`text-3xl font-black tracking-wider tabular-nums ${timeLeft <= 30 && timeLeft > 0 ? "animate-blink-red" : "text-[#FFBB00]"}`}
           >
             {formatTime(timeLeft)}
           </div>
           <span
-            className={`text-[#FFBB00] text-sm ${timeLeft <= 30 && timeLeft > 0 ? "animate-blink-red" : ""}`}
+            className={`text-[#FFBB00] text-md ${timeLeft <= 30 && timeLeft > 0 ? "animate-blink-red" : ""}`}
           >
             ✦
           </span>
@@ -92,25 +92,20 @@ export default function HomePage() {
           {/* Flex container: Mobile-ում իրար տակ (col), Desktop-ում կողք-կողքի (row) */}
           {/* Flex container: Column on mobile (col), Row on desktop (row) */}
           <div className="flex flex-col md:flex-row gap-6 md:gap-10 items-center md:items-start relative z-10">
-            {/* Athlete Image */}
-            <div className="w-full md:w-2/5 flex justify-center">
-              <div className="w-full md:w-2/5 flex justify-center">
-                <Image
-                  src="/Group 238462.png"
-                  alt="Athlete"
-                  width={320}
-                  height={450}
-                  quality={100}
-                  className="object-contain shrink-0 
-               
-               /* To maintain the previous desktop look */
-               md:w-[320px] md:h-auto md:mt-4 md:max-w-none
-               
-                /* Mobile dimensions (only for smaller screens) */
-               w-[124px] h-[250px] max-w-[124px]"
-                  priority
-                />
-              </div>
+            {/* Athlete Image Container */}
+            <div className="w-full md:w-2/5 flex justify-center items-end self-end overflow-visible min-h-[230px] md:min-h-[605px]">
+              <Image
+                src="/athlete-pro.webp"
+                alt="Athlete"
+                width={960}
+                height={1350}
+                className="object-contain shrink-0 relative will-change-transform
+      /* Desktop */
+      md:w-auto md:h-[605px] md:max-w-none md:top-[-25px]
+      /* Mobile */
+      w-[124px] h-[230px]"
+                priority
+              />
             </div>
 
             {/* Content Area (Plans + Button + Legal) */}
