@@ -16,7 +16,7 @@ interface PricingPlan {
 
 export default function HomePage() {
   const [plans, setPlans] = useState<PricingPlan[]>([]);
-  const [timeLeft, setTimeLeft] = useState(7);
+  const [timeLeft, setTimeLeft] = useState(120);
   const [selectedPeriod, setSelectedPeriod] = useState<string | null>(null);
   const [agreed, setAgreed] = useState(false);
   const [showCheckboxError, setShowCheckboxError] = useState(false);
